@@ -1,0 +1,20 @@
+FROM microsoft/windowsservercore
+
+# install chocolately for easy package installation
+WORKDIR /choco
+RUN powershell -Command Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+RUN powershell -Command refreshenv
+
+# install chrome
+WORKDIR /chrome
+RUN cinst -y GoogleChrome
+
+# install selenium drivers
+WORKDIR /selenium
+RUN cinst -y chromedriver
+
+# install maven and java
+WORKDIR /maven
+RUN cinst -y maven
+
+RUN refreshenv
